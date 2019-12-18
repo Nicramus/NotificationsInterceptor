@@ -10,6 +10,8 @@ import android.util.Log;
 
 public class NotificationService extends NotificationListenerService {
 
+    public static final String NOTIFICATION_SERVICE_NOTIFICATION_POSTED = "NOTIFICATION_SERVICE_NOTIFICATION_POSTED";
+
     @Override
     public IBinder onBind(Intent intent) {
         Log.i("onBind","BIND!");
@@ -26,6 +28,10 @@ public class NotificationService extends NotificationListenerService {
             Bundle extras = extras = sbn.getNotification().extras;
             text = extras.getCharSequence("android.text").toString();
             title = extras.getString("android.title");
+
+            Intent intent = new Intent(NOTIFICATION_SERVICE_NOTIFICATION_POSTED);
+            intent.putExtra("Notification text", text);
+            sendBroadcast(intent);
         }
 
         Log.i("Package",pack);
